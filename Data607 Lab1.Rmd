@@ -1,0 +1,53 @@
+---
+title: "Data607 Lab1"
+output: html_document
+date: "2024-02-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+## Introduction: NBA Forecast Data 
+
+This dataset that I chose to work with is the NBA forecast data. This dataset gives the predictions for the 2022-2023 NBA season champions using data from only the latest season. This data uses many different metrics and rating systems to make forecast on who will win games and ultimately the final game of the season. I decided to work with this dataset due to the fact that I've been an avid basketball fan since I was a kid watvhing players like Kobe Bryant and Carmelo Anthony dominate the court. Below is the link for the Github page of the dataset that I chose.   
+
+https://github.com/fivethirtyeight/data/blob/master/nba-forecasts/README.md
+
+This is the link to the article that talks about the data behind NBA forecasting and the ELO system that has rated teams across decades of data.
+
+https://fivethirtyeight.com/methodology/how-our-nba-predictions-work/
+
+I will load the tidyverse library to help me tidy this data.
+
+## Load Library
+
+```{}
+library(tidyverse)
+```
+
+## Load Dataset into dataframe
+
+```{Load Dataset into dataframe}
+
+nbaforecastOriginal <-read.csv("https://projects.fivethirtyeight.com/nba-model/nba_elo_latest.csv" , header = TRUE , sep = "," )
+
+```
+
+## Creating a Subset of columns in our NBA forecast data frame
+
+We want to create a data frame with a subset of columns with the most important variables when it comes to indicating who will win the NBA championship. We will keep the header columns because they are accurate but will not include columns such as the CARM-Elo rating metric which has been recently implemented in 2015 to try and account for offseason transactions. This model hasn't been as successful and reliable as the ELO ratings system, which is useful for tracking a teams trajectory through history using a variety of variables. Another more reliable model is the Raptor data which is a metric of player ratings for that specific team. These columns are the most important in predicting our NBA 2023 champions.
+
+```{Subset Important Columns in New Data frame }
+str(nbaforecastOriginal)
+nbaforecast <- nbaforecastOriginal %>%
+  select(date, season, playoff, team1, team2, elo1_pre, elo2_pre, elo_prob1, elo_prob2, elo1_post, elo2_post, raptor1_pre, raptor2_pre, raptor_prob1, raptor_prob2, score1, score2, quality, importance, total_rating )
+str(nbaforecast)
+```
+
+## Conclusion: 
+The conclusion of the analysis of this dataset based on the games that were played was that the Denver Nuggets would have  the best chance of winning the 2023 NBA Champions and this is what occured in the 2023 season. Due to their ELO and Raptor metrics, they showed the best chance of winning the 2023 season. Go DENVERRR!
